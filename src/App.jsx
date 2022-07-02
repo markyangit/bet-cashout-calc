@@ -1,43 +1,52 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { useState } from "react"
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [state, setState] = useState(
+    {
+      bettedAmount: 100,
+      bettedOdd: 2.4,
+      protectionOdd: 2.05,
+    }
+  )
+
+  function handleState(event) {
+    const { target: { name, value } } = event;
+    setState({...state, [name]: value})
+  }
+
+  function calculateProtectionAmount() {
+    const { bettedAmount, bettedOdd, protectionOdd } = state;
+    return (bettedAmount * bettedOdd) / protectionOdd
+  }
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <label>
+        Insira o montante apostado:
+        <input
+          type="number"
+          name="bettedAmount"
+          onChange={handleState}
+        />
+      </label>
+      <label>
+        Insira a odd:
+        <input
+          type="number"
+          name="bettedOdd"
+          onChange={handleState}
+        />
+      </label>
+      <label>
+        Insira a odd da proteção:
+        <input
+          type="number"
+          name="protectionOdd"
+          onChange={handleState}
+        />
+      </label>
+      <span></span>
     </div>
   )
 }
